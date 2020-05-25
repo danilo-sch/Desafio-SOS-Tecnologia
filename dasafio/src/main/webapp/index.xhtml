@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <title>Desafio</title>
+</h:head>
+
+<h:body>
+    <h:form>
+        <h:link value = "Criar" outcome="criarPatrimonio"></h:link>
+    <p:dataTable var="patrimonio" value="#{patrimonioBean.patrimonios}">
+        <f:facet name="header">
+            Patrimônios
+        </f:facet>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Id"/>
+            </f:facet>
+            <h:outputText value="#{patrimonio.id}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Nome"/>
+            </f:facet>
+            <h:link value = "#{patrimonio.nome}" outcome="detalhes">
+                <f:param name="id" value="#{patrimonio.id}"/>
+            </h:link>
+            <!--<h:commandLink value="#{patrimonio.nome}" action ="#{patrimonioBean.exibir(patrimonio)}"></h:commandLink>-->
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Descrição"/>
+            </f:facet>
+            <h:outputText value="#{patrimonio.descricao}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Numero Tombo"/>
+            </f:facet>
+            <h:outputText value="#{patrimonio.num_tombo}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Marca"/>
+            </f:facet>
+            <h:outputText value="#{patrimonio.marcaid}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Ações"/>
+            </f:facet>
+            <h:link value = "Editar" outcome="editarPatrimonio">
+                <f:param name="id" value="#{patrimonio.id}"/>
+            </h:link>
+            <h:commandLink value = "Excluír" action="#{patrimonioBean.remover(patrimonio.id)}"/>
+        </p:column>
+    </p:dataTable>
+    </h:form>
+    <br></br>
+    <h:form>
+        <h:link value = "Criar" outcome="criarMarca"></h:link>
+        <p:dataTable var="marca" value="#{marcaBean.marcas}">
+            <f:facet name="header">
+                Marcas
+            </f:facet>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Id"/>
+                </f:facet>
+                <h:outputText value="#{marca.id}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Nome"/>
+                </f:facet>
+                <h:link value = "#{marca.nome}" outcome="detalhesMarca">
+                    <f:param name="id" value="#{marca.id}"/>
+                </h:link>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Ações"/>
+                </f:facet>
+                <h:link value = "Editar" outcome="editarMarca">
+                    <f:param name="id" value="#{marca.id}"/>
+                </h:link>
+                <h:commandLink value = "Excluír" action="#{marcaBean.remover(marca.id)}"/>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+    <br></br>
+        <h:form>
+            <p:growl showDetail="true" autoUpdate="true" />
+
+            <h:panelGrid columns="2">
+                <p:outputLabel value="Arquivo: " for="fileUpload" />
+                <p:fileUpload id="fileUpload"
+                              fileUploadListener="#{uploadAvancadoBean.upload}"
+                              update="dataTable" label="Escolher" uploadLabel="Enviar"
+                              cancelLabel="Cancelar" allowTypes="/(\.|\/)(pdf)$/"
+                              invalidFileMessage="São permitidas somente arquivos (pdf)"
+                              sizeLimit="1024000"
+                              invalidSizeMessage="O tamanho máximo permitido é de 1KB."
+                              fileLimit="5"
+                              fileLimitMessage="Só é possível escolher 5 arquivos por vez."
+                              multiple="true" auto="false"
+                              onstart="console.log('Iniciando envio de arquivo')"
+                              onerror="console.log('Erro na requisição de envio')"
+                              oncomplete="console.log('Envio concluído')" />
+            </h:panelGrid>
+
+            <p:spacer height="20px" />
+
+            <p:dataTable value="#{uploadAvancadoBean.arquivos}" var="file"
+                         id="dataTable">
+                <f:facet name="header">
+                    Arquivos
+                </f:facet>
+                <p:column width="200">
+                    <p:commandButton value="Baixar" ajax="false"
+                                     actionListener="#{descarregadorBean.descarregar(file)}"
+                                     icon="ui-icon-arrowthick-1-s">
+                        <p:fileDownload value="#{descarregadorBean.streamedContent}" />
+                    </p:commandButton>
+                </p:column>
+
+                <p:column headerText="Nome">
+                    <h:outputText value="#{file.name}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+</h:body>
+</html>

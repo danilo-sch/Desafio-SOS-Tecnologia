@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{patrimonioBean.initDetalhes}"/>
+</f:metadata>
+<h:head>
+    <title>Desafio - Patrimonio</title>
+</h:head>
+<h:body>
+    <h:form>
+        <h:panelGroup>
+            <p:outputLabel for="nome" value="Nome: "/>
+            <h:inputText id="nome" value="#{patrimonioBean.patrimonio.nome}"/>
+        </h:panelGroup>
+        <br></br>
+        <h:panelGroup>
+            <p:outputLabel for="descricao" value="Descricao: "/>
+            <h:inputText id="descricao" value="#{patrimonioBean.patrimonio.descricao}"/>
+        </h:panelGroup>
+        <br></br>
+
+        <h:panelGroup>
+            <p:outputLabel for="marcaid" value="Marca: "/>
+            <h:inputText id="marcaid" value="#{patrimonioBean.patrimonio.marcaid}"/>
+        </h:panelGroup>
+        <h:commandButton value="Salvar" action="#{patrimonioBean.criar}"></h:commandButton>
+    </h:form>
+</h:body>
+</html>

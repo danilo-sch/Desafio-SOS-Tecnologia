@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:metadata>
+    <f:viewParam name="id" value="#{patrimonioBean.id}"/>
+    <f:event type="preRenderView" listener="#{patrimonioBean.initDetalhes}"/>
+</f:metadata>
+<h:head>
+    <title>Desafio - Patrimonio</title>
+</h:head>
+<h:body>
+    <h:form>
+        <h:panelGroup>
+            <p:outputLabel for="id" value="Id: "/>
+            <h:outputText id="id" value="#{patrimonioBean.patrimonio.id}"/>
+        </h:panelGroup>
+        <br></br>
+        <h:panelGroup>
+            <p:outputLabel for="nome" value="Nome: "/>
+            <h:outputText id="nome" value="#{patrimonioBean.patrimonio.nome}"/>
+        </h:panelGroup>
+        <br></br>
+        <h:panelGroup>
+            <p:outputLabel for="descricao" value="Descricao: "/>
+            <h:outputText id="descricao" value="#{patrimonioBean.patrimonio.descricao}"/>
+        </h:panelGroup>
+        <br></br>
+        <h:panelGroup>
+            <p:outputLabel for="num_tombo" value="Numero Tombo: "/>
+            <h:outputText id="num_tombo" value="#{patrimonioBean.patrimonio.num_tombo}"/>
+        </h:panelGroup>
+        <br></br>
+        <h:panelGroup>
+            <p:outputLabel for="marcaid" value="Marca: "/>
+            <h:outputText id="marcaid" value="#{patrimonioBean.patrimonio.marcaid}"/>
+        </h:panelGroup>
+        <br></br>
+        <h:link value = "Editar" outcome="editarPatrimonio">
+            <f:param name="id" value="#{patrimonioBean.patrimonio.id}"/>
+        </h:link>
+        <h:commandLink value = "Excluír" action="#{patrimonioBean.remover(patrimonioBean.patrimonio.id)}"/>
+    </h:form>
+</h:body>
+</html>
